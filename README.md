@@ -1,10 +1,10 @@
 # Universal Stress Response Prediction
 
-A comprehensive machine learning framework for predicting amino acid mutation effects on universal stress response using high-throughput drug screening, protein language models, and amino acid topology attributes.
+A comprehensive machine learning framework for predicting amino acid mutation effects on universal stress response using high-throughput drug screening, protein language models (pLM), and amino acid topology attributes.
 
 ## Overview
 
-This repository contains code for training and validating machine learning models that predict how amino acid mutations affect cellular responses to targeted cancer therapies. The framework integrates structural biology, deep learning embeddings, and functional genomics data to enable accurate prediction of drug resistance mechanisms.
+This repository contains code for training and validating machine learning models that predict how amino acid mutations affect cellular responses to targeted cancer therapies. The framework integrates structural biology, pLM embeddings, and drug screen data to enable accurate prediction of drug response mechanisms.
 
 ## Key Features
 
@@ -17,8 +17,8 @@ This repository contains code for training and validating machine learning model
 ## Model Architecture
 
 ### Input Features
-- **Protein Embeddings**: 1024-dimensional embeddings from protein language models
-- **Structural Topology**: Contact frequency (CF) and local density (LD) metrics from AlphaFold2 predictions
+- **Protein Embeddings**: 1024-dimensional embeddings from protein language models (ProtT5)
+- **Structural Topology**: Contact flexibility (CF) and local density (LD) metrics from AlphaFold2 predictions
 - **Biophysical Properties**: Amino acid mass, isoelectric point, hydrophobicity, and structural angles
 
 ### Machine Learning Approach
