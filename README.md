@@ -113,9 +113,9 @@ Rscript 1.0.training_prepare.R
 ```
 #### Expected output:
 - training_sites_abem.txt, training_sites_bini.txt, training_sites_olap.txt
-#### - KO_phenotype_[drug].txt files
+- KO_phenotype_[drug].txt files
 - training_site_CF_[drug].txt files
-#### - mars_train_[drug]_info.txt files
+- mars_train_[drug]_info.txt files
 
 
 ### Step 2: Model Training
@@ -154,12 +154,12 @@ Models are trained on:
 Rscript 3.0.cross_drug_validation.R
 ```
 #### Supporting Data Files (a.data/)
-4. **`AF2_WG_CF.RData`** - AlphaFold2 structural features and confidence metrics
-5. **`embeddings_per_protein.txt`** - Protein embeddings from protein language models
-6. **`cross_drug_eb_per_residue_all.txt`** - Amino acid residue embeddings
-7. **`aa_property.txt`** - Amino acid biophysical properties
-8. **`Prot_scope_common.csv`** - Core protein subset for focused analysis
-9. **`pLM_LassoMARS.RData`** - Pre-trained machine learning models
+**`AF2_WG_CF.RData`** - AlphaFold2 structural features and confidence metrics
+**`embeddings_per_protein.txt`** - Protein embeddings from protein language models
+**`cross_drug_eb_per_residue_all.txt`** - Amino acid residue embeddings
+**`aa_property.txt`** - Amino acid biophysical properties
+**`Prot_scope_common.csv`** - Core protein subset for focused analysis
+**`pLM_LassoMARS.RData`** - Pre-trained machine learning models
 
 #### Processing Files (d.validation_cross_drug/)
 1. **`cross_drug_screen_phenotype.csv`** - Processed drug resistance phenotypes
