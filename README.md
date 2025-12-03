@@ -111,11 +111,11 @@ git clone https://github.com/YingLiu-1212/pLM_LassoMARS.git
 # Process training data for specific drugs
 Rscript 1.0.training_prepare.R
 ```
-# Expected output:
+#### Expected output:
 # - training_sites_abem.txt, training_sites_bini.txt, training_sites_olap.txt
-# - KO_phenotype_[drug].txt files
+#### - KO_phenotype_[drug].txt files
 # - training_site_CF_[drug].txt files
-# - mars_train_[drug]_info.txt files
+#### - mars_train_[drug]_info.txt files
 
 
 ### Step 2: Model Training
@@ -123,19 +123,19 @@ Rscript 1.0.training_prepare.R
 # Train Lasso-MARS ensemble models
 Rscript 2.0.model_construct.R
 ```
-# Expected output:
+#### Expected output:
 
-### Model Files (c.training)
+#### Model Files (c.training)
 1. **RData files**: Saved models pLM_LassoMARS.RData
 2. **CSV files**: Model coefficients for interpretability
 
-### Visualization Output (o.output_figures/)
+#### Visualization Output (o.output_figures/)
 1. **Model component plots**: Show MARS basis functions and relationships
 2. **Combined ROC curve**: Compares performance across all three models
 3. **AUC values**: Quantitative performance metrics
 
 
-### Feature Space
+#### Feature Space
 Models are trained on:
 - Protein embeddings (1024 dimensions)
 - Amino acid embeddings (1024 dimensions)
@@ -143,7 +143,7 @@ Models are trained on:
 - Amino acid biophysical properties (nAngels, Mass, IP, HM)
 - Knockout phenotype information
 
-### Performance Metrics
+#### Performance Metrics
 - **AUC (Area Under ROC Curve)**: Primary performance metric
 - **ROC curves**: Visualization of true positive vs. false positive rates
 - **Model coefficients**: Interpretability of feature importance
@@ -153,8 +153,7 @@ Models are trained on:
 # Validate models on independent drug datasets
 Rscript 3.0.cross_drug_validation.R
 ```
-
-### Supporting Data Files (a.data/)
+#### Supporting Data Files (a.data/)
 4. **`AF2_WG_CF.RData`** - AlphaFold2 structural features and confidence metrics
 5. **`embeddings_per_protein.txt`** - Protein embeddings from protein language models
 6. **`cross_drug_eb_per_residue_all.txt`** - Amino acid residue embeddings
@@ -162,14 +161,14 @@ Rscript 3.0.cross_drug_validation.R
 8. **`Prot_scope_common.csv`** - Core protein subset for focused analysis
 9. **`pLM_LassoMARS.RData`** - Pre-trained machine learning models
 
-### Processing Files (d.validation_cross_drug/)
+#### Processing Files (d.validation_cross_drug/)
 1. **`cross_drug_screen_phenotype.csv`** - Processed drug resistance phenotypes
 2. **`cross_drug_edit_AA_canonical.txt`** - Canonical amino acid editing information
 3. **`cross_drug_edit_AA_phenotype_AF2CF.txt`** - Phenotype data with AlphaFold2 structural features
 4. **`cross_drug_full_phenotype_info.txt`** - Complete phenotype-structure dataset for all proteins
 5. **`cross_drug_Core_phenotype_info.txt`** - Phenotype-structure dataset for core protein subset
 
-### Model Input Files (d.validation_cross_drug/)
+#### Model Input Files (d.validation_cross_drug/)
 6. **`Drug_[drugname]_full_test_info.txt`** - Test data information for full protein sets
 7. **`Drug_[drugname]_full_eb_all.txt`** - Embedding data for full protein sets
 8. **`Drug_[drugname]_Core_test_info.txt`** - Test data information for core protein subsets
@@ -182,7 +181,7 @@ Rscript 3.0.cross_drug_validation.R
 Rscript 4.2.TCGA_predict.R
 Rscript 4.4.MSK_predict.R
 ```
-# Expected output:
+#### Expected output:
 - `tcga_core73_prediction_info.txt` - Site-level prediction results
 - `tcga_patient_stress_prediction.txt` - Patient-level prediction results
 - `Surv_OS_StressResponse_tcga.pdf` - Overall survival curves
@@ -200,11 +199,11 @@ Rscript 5.1.plot_Predict_tcga_msk_PTM.R
 Rscript 5.2.plot_cosmic_AB_PTM.R
 Rscript 5.3.clinical_core_surv_Phos_PDB.R  # Run clinical survival analysis by phosphorylation proximity script
 ```
-# Expected output:
+#### Expected output:
 - `PDB_AA_Unires_clinical_prediction_boxplot.pdf` - Comparative boxplot visualization
 - `Surv_OS_PhosDist3_clinical_COSMIC_core.pdf` - Survival curves based on phosphorylation distance
 
-# Run Time
+## Run Time
 - >=24 hours 
 
 ## Reproduction Instructions
