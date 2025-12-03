@@ -112,9 +112,9 @@ git clone https://github.com/YingLiu-1212/pLM_LassoMARS.git
 Rscript 1.0.training_prepare.R
 ```
 #### Expected output:
-# - training_sites_abem.txt, training_sites_bini.txt, training_sites_olap.txt
+- training_sites_abem.txt, training_sites_bini.txt, training_sites_olap.txt
 #### - KO_phenotype_[drug].txt files
-# - training_site_CF_[drug].txt files
+- training_site_CF_[drug].txt files
 #### - mars_train_[drug]_info.txt files
 
 
