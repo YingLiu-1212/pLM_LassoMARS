@@ -203,8 +203,7 @@ Rscript 5.3.clinical_core_surv_Phos_PDB.R  # Run clinical survival analysis by p
 - `PDB_AA_Unires_clinical_prediction_boxplot.pdf` - Comparative boxplot visualization
 - `Surv_OS_PhosDist3_clinical_COSMIC_core.pdf` - Survival curves based on phosphorylation distance
 
-## Run Time
-- >=24 hours 
+
 
 ## Reproduction Instructions
 
@@ -213,6 +212,10 @@ Rscript 5.3.clinical_core_surv_Phos_PDB.R  # Run clinical survival analysis by p
 # 2. Set up directory structure exactly as in the paper
 # 3. Run scripts in order
 ```
+### Expected Runtime
+- **Data preparation**: ~2 hours
+- **Script execution**: ~12 hours
+
 
 ## License
 This project is licensed under the MIT License - see the LICENSE file for details.
