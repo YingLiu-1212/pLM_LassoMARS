@@ -1,4 +1,4 @@
-# Universal Stress Response Prediction
+# Drug Response Prediction and Clinical Analysis Pipeline
 
 A comprehensive machine learning framework for predicting amino acid mutation effects on universal stress response using high-throughput drug screening, protein language models (pLM), and amino acid topology attributes.
 
@@ -28,10 +28,35 @@ This repository contains code for training and validating machine learning model
 
 ## Installation
 
-### Prerequisites
-- R (version 4.0+)
-- Python (version 3.8+)
-- PyMOL (for structural visualization)
+### 1.1 Operating Systems
+- **Tested on**: Ubuntu 20.04 LTS
+
+### 1.2 Software Dependencies
+
+#### R Environment
+- **R version**: 4.1.3
+
+#### R Packages with Version Requirements:
+```r
+# Core packages (with tested versions)
+dplyr (>= 1.1.0)
+tidyr (>= 1.3.0)
+ggplot2 (>= 3.4.0)
+stringr (>= 1.5.0)
+matrixStats (>= 0.63.0)
+VennDiagram (>= 1.7.3)
+RColorBrewer (>= 1.1.3)
+pROC (>= 1.18.0)  # for ROC analysis
+survival (>= 3.5.0)  # for survival analysis
+survminer (>= 0.4.9)  # for survival plots
+earth (>= 5.3.2)  # for MARS modeling
+glmnet (>= 4.1.0)  # for LASSO regression
+```
+
+#### Additional Requirements:
+- **Disk Space**: Minimum 120GB (for ProtT5 embeddings)
+- **Memory**: 64GB RAM recommended
+- **Processor**: Multi-core CPU (8+ cores recommended)
 
 ### R Dependencies
 ```r
@@ -60,19 +85,24 @@ install.packages(c(
 └── function_pLM_LassoMARS.R          # Core modeling functions
 ```
 
-### Data Requirements
+## Installation Guide
 
-#### Input Data
-- **Drug Screening Data**: Base editor-based functional genomics screens
-- **Protein Structures**: AlphaFold2 predictions 
-- **Clinical Mutations**: TCGA and MSK sequencing data
-- **Protein Embeddings**: ProtT5 model outputs
-- **Amino Acid Properties**: Biophysical and chemical characteristics
+### Step 1: Install R and Required Packages
+```bash
 
-#### Processed Features
-- **Topology Metrics**: CF10, CF10QS, LD15, LD15RK, CF10QS_FPI
-- **Embedding Vectors**: 1024-dimensional protein and residue embeddings
-- **Clinical Annotations**: Survival outcomes, mutation types, treatment history
+# Install required packages
+Rscript -e "install.packages(c('dplyr', 'tidyr', 'ggplot2', 'stringr', 'matrixStats', 'VennDiagram', 'RColorBrewer', 'pROC', 'survival', 'survminer', 'earth', 'glmnet'), dependencies=TRUE)"
+```
+
+### Step 2: Clone Repository and Set Up Directory Structure
+```bash
+# Clone repository
+git clone https://github.com/YingLiu-1212/pLM_LassoMARS.git
+
+```
+### Installation Time
+- **Data download**: 1-2 hours (depending on internet speed and file sizes)
+- **Total setup**: 1.5-3 hours for complete setup
 
 ## Usage
 
@@ -81,12 +111,42 @@ install.packages(c(
 # Process training data for specific drugs
 Rscript 1.0.training_prepare.R
 ```
+# Expected output:
+# - training_sites_abem.txt, training_sites_bini.txt, training_sites_olap.txt
+# - KO_phenotype_[drug].txt files
+# - training_site_CF_[drug].txt files
+# - mars_train_[drug]_info.txt files
+
 
 ### Step 2: Model Training
 ```bash
 # Train Lasso-MARS ensemble models
 Rscript 2.0.model_construct.R
 ```
+# Expected output:
+
+### Model Files (c.training)
+1. **RData files**: Saved models pLM_LassoMARS.RData
+2. **CSV files**: Model coefficients for interpretability
+
+### Visualization Output (o.output_figures/)
+1. **Model component plots**: Show MARS basis functions and relationships
+2. **Combined ROC curve**: Compares performance across all three models
+3. **AUC values**: Quantitative performance metrics
+
+
+### Feature Space
+Models are trained on:
+- Protein embeddings (1024 dimensions)
+- Amino acid embeddings (1024 dimensions)
+- Structural topology features
+- Amino acid biophysical properties (nAngels, Mass, IP, HM)
+- Knockout phenotype information
+
+### Performance Metrics
+- **AUC (Area Under ROC Curve)**: Primary performance metric
+- **ROC curves**: Visualization of true positive vs. false positive rates
+- **Model coefficients**: Interpretability of feature importance
 
 ### Step 3: Cross-Drug Validation
 ```bash
@@ -94,9 +154,66 @@ Rscript 2.0.model_construct.R
 Rscript 3.0.cross_drug_validation.R
 ```
 
+### Supporting Data Files (a.data/)
+4. **`AF2_WG_CF.RData`** - AlphaFold2 structural features and confidence metrics
+5. **`embeddings_per_protein.txt`** - Protein embeddings from protein language models
+6. **`cross_drug_eb_per_residue_all.txt`** - Amino acid residue embeddings
+7. **`aa_property.txt`** - Amino acid biophysical properties
+8. **`Prot_scope_common.csv`** - Core protein subset for focused analysis
+9. **`pLM_LassoMARS.RData`** - Pre-trained machine learning models
+
+### Processing Files (d.validation_cross_drug/)
+1. **`cross_drug_screen_phenotype.csv`** - Processed drug resistance phenotypes
+2. **`cross_drug_edit_AA_canonical.txt`** - Canonical amino acid editing information
+3. **`cross_drug_edit_AA_phenotype_AF2CF.txt`** - Phenotype data with AlphaFold2 structural features
+4. **`cross_drug_full_phenotype_info.txt`** - Complete phenotype-structure dataset for all proteins
+5. **`cross_drug_Core_phenotype_info.txt`** - Phenotype-structure dataset for core protein subset
+
+### Model Input Files (d.validation_cross_drug/)
+6. **`Drug_[drugname]_full_test_info.txt`** - Test data information for full protein sets
+7. **`Drug_[drugname]_full_eb_all.txt`** - Embedding data for full protein sets
+8. **`Drug_[drugname]_Core_test_info.txt`** - Test data information for core protein subsets
+9. **`Drug_[drugname]_Core_eb_all.txt`** - Embedding data for core protein subsets
+
+
 ### Step 4: Clinical Prediction
 ```bash
 # Apply models to clinical datasets
 Rscript 4.2.TCGA_predict.R
 Rscript 4.4.MSK_predict.R
 ```
+# Expected output:
+- `tcga_core73_prediction_info.txt` - Site-level prediction results
+- `tcga_patient_stress_prediction.txt` - Patient-level prediction results
+- `Surv_OS_StressResponse_tcga.pdf` - Overall survival curves
+- `Surv_OS_StressResponse_tcga_type.pdf` - Survival curves stratified by cancer type
+- `msk_core73_prediction_info.txt` - Site-level prediction results
+- `msk_patient_stress_prediction.txt` - Patient-level prediction results
+- `Surv_OS_StressResponse_msk.pdf` - Overall survival curves
+- `Surv_OS_StressResponse_msk_type.pdf` - Survival curves stratified by cancer type
+
+
+### Step 5: COSMIC and Screening Data Phosphorylation Analysis 
+
+```bash
+Rscript 5.1.plot_Predict_tcga_msk_PTM.R
+Rscript 5.2.plot_cosmic_AB_PTM.R
+Rscript 5.3.clinical_core_surv_Phos_PDB.R  # Run clinical survival analysis by phosphorylation proximity script
+```
+# Expected output:
+- `PDB_AA_Unires_clinical_prediction_boxplot.pdf` - Comparative boxplot visualization
+- `Surv_OS_PhosDist3_clinical_COSMIC_core.pdf` - Survival curves based on phosphorylation distance
+
+# Run Time
+- >=24 hours 
+
+## Reproduction Instructions
+
+```bash
+# 1. Download complete dataset (see data_links.txt)
+# 2. Set up directory structure exactly as in the paper
+# 3. Run scripts in order
+```
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
