@@ -18,7 +18,7 @@ This repository contains code for training and validating machine learning model
 
 ### Input Features
 - **Protein Embeddings**: 1024-dimensional embeddings from protein language models (ProtT5)
-- **Structural Topology**: Contact flexibility (CF) and local density (LD) metrics from AlphaFold2 predictions
+- **Structural Topology**: Contact flexibility (CF) and local density (LD) metrics from AlphaFold2 structures
 - **Biophysical Properties**: Amino acid mass, isoelectric point, hydrophobicity, and structural angles
 
 ### Machine Learning Approach
@@ -29,7 +29,8 @@ This repository contains code for training and validating machine learning model
 ## Installation
 
 ### 1.1 Operating Systems
-- **Tested on**: Ubuntu 20.04 LTS
+- **Linux** 
+- Tested on: Rocky Linux 8.7 
 
 ### 1.2 Software Dependencies
 
@@ -39,18 +40,17 @@ This repository contains code for training and validating machine learning model
 #### R Packages with Version Requirements:
 ```r
 # Core packages (with tested versions)
-dplyr (>= 1.1.0)
-tidyr (>= 1.3.0)
-ggplot2 (>= 3.4.0)
+dplyr (>= 1.1.4)
+tidyr (>= 1.3.1)
+ggplot2 (>= 3.5.1)
 stringr (>= 1.5.0)
-matrixStats (>= 0.63.0)
+matrixStats (>= 1.4.1)
 VennDiagram (>= 1.7.3)
-RColorBrewer (>= 1.1.3)
-pROC (>= 1.18.0)  # for ROC analysis
-survival (>= 3.5.0)  # for survival analysis
+pROC (>= 1.18.5)  # for ROC analysis
+survival (>= 3.7.0)  # for survival analysis
 survminer (>= 0.4.9)  # for survival plots
-earth (>= 5.3.2)  # for MARS modeling
-glmnet (>= 4.1.0)  # for LASSO regression
+earth (>= 5.3.4)  # for MARS modeling
+glmnet (>= 4.1.8)  # for LASSO regression
 ```
 
 #### Additional Requirements:
@@ -123,7 +123,6 @@ Rscript 1.0.training_prepare.R
 # Train Lasso-MARS ensemble models
 Rscript 2.0.model_construct.R
 ```
-#### Expected output:
 
 #### Model Files (c.training)
 1. **RData files**: Saved models pLM_LassoMARS.RData
@@ -204,14 +203,11 @@ Rscript 5.3.clinical_core_surv_Phos_PDB.R  # Run clinical survival analysis by p
 - `Surv_OS_PhosDist3_clinical_COSMIC_core.pdf` - Survival curves based on phosphorylation distance
 
 
-
 ## Reproduction Instructions
+- 1. Download complete dataset
+- 2. Extract all compressed directory
+- 3. Run scripts in order
 
-```bash
-# 1. Download complete dataset (see data_links.txt)
-# 2. Set up directory structure exactly as in the paper
-# 3. Run scripts in order
-```
 ### Expected Runtime
 - **Data preparation**: ~2 hours
 - **Script execution**: ~12 hours
